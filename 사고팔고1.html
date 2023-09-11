@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사고팔고1</title>
+
+    <style>
+        div{
+            border: 1px solid transparent;
+        }
+
+        body{
+            background-color: black;
+        }
+
+        .container{
+            width: 1000px;
+            margin: auto;
+            background-color: black;
+            padding-top: 80px;
+        }
+
+        .nav-bar{
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            position: fixed;
+            top: 0;
+            width: 1000px;
+            background-color: black;
+        }
+
+        .nav-bar > div:nth-child(1){
+            font-size: 30px;
+            font-weight: bold;
+            color: orange;
+        }
+
+        .nav-bar a{
+            text-decoration: none;
+            color: white;
+            margin: 10px;
+        }
+
+        .nav-bar > div:nth-child(3){
+            background-color: orange;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            padding-left: 12px;
+            padding-right: 12px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .nav-bar > div:nth-child(3):hover{
+            filter: brightness(95%);
+        }
+
+        .header{
+            display: flex;
+            height: 400px;
+        }
+
+        .header > div:nth-child(1){
+            width: 50%;
+            display: flex;
+            align-items: center;
+        }
+
+        .header > div:nth-child(2){
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header p {
+            color: white;
+            width: 75%;
+            /* 줄 높이 */
+            line-height: 40px;
+        }
+
+        .content{
+            background-color: white;
+            padding-left: 80px;
+            padding-right: 80px;
+        }
+
+        .content h3{
+            color: orange;
+            text-align: center;
+        }
+
+        .item{
+            width: calc(100%/3 - 20px);
+            height: 200px;
+            border-radius: 20px;
+            box-shadow: 0px 0px 4px 2px gainsboro;
+            margin-bottom: 20px;
+        }
+
+        .item > div:nth-child(1){
+            height: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .item > div:nth-child(2){
+            height: 40%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item p{
+            margin: 10px;
+        }
+
+        .content > div:nth-child(2){
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .footer{
+            height: 300px;
+            background-color: #121227;
+            display: flex;
+        }
+
+        .footer > div:nth-child(1){
+            width: 50%;
+            padding: 20px;
+        }
+
+        .footer > div:nth-child(1) > div{
+            width: 100%;
+            height: 100%;
+        }
+
+        .footer > div:nth-child(2){
+            width: 50%;
+            padding: 20px;
+        }
+
+        .footer > div:nth-child(2) > p:nth-child(1){
+            color: white;
+            font-size: 25px;
+        }
+
+        .footer > div:nth-child(2) > p:nth-child(2){
+            color: white;
+            font-size: 15px;
+        }
+
+        /* a태그 클릭으로 스크롤 이동시 부드럽게 이동시키기 */
+        html{
+            scroll-behavior: smooth;
+        }
+
+
+    </style>
+</head>
+<body>
+ 
+        <div class="content" id="menu">
+            <div>
+                <h3>용품 목록</h3>
+            </div>
+            <div>
+                <div class="item">
+                    <div>
+                        <img height="90%" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjyNkCctXpoj1VrPo4CCOoqL17nc2Pf1Ks3g&usqp=CAU" alt="">
+                    </div>
+                    <div>
+                        <p>휠</p>
+                        <p>100,000원</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <div>
+                        <img height="90%" src="https://thumbnail10.coupangcdn.com/thumbnails/remote/230x230ex/image/vendor_inventory/ebeb/a83bff5380dc01d523b63c25a0963821e2cf5aa5a88be0edf515675021c3.jpg" alt="">
+                    </div>
+                    <div>
+                        <p>코어무시고무</p>
+                        <p>1,800원</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <div>
+                        <img height="90%" src="https://thumbnail6.coupangcdn.com/thumbnails/remote/230x230ex/image/rs_quotation_api/p8wk6tdv/5f2a26ee234c4faea97463c8f92133b1.jpg" alt="">
+                    </div>
+                    <div>
+                        <p>스포크랜치 조절공구</p>
+                        <p>4,700원</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <div>
+                        <img height="90%" src="https://thumbnail10.coupangcdn.com/thumbnails/remote/230x230ex/image/vendor_inventory/2fe4/3a84d567d1a59d6dc5dabd8e2376ce6f60eeb27a22f8c8db08e437ba6f14.jpg" alt="">
+                    </div>
+                    <div>
+                        <p>타이어</p>
+                        <p>11,000원</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <div>
+                        <img height="90%" src="https://thumbnail9.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2023/05/30/11/8/505433a1-fa51-47dc-8a04-93123f07c259.jpg" alt="">
+                    </div>
+                    <div>
+                        <p>보조손잡이</p>
+                        <p>6,000원</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <div>
+                        <img height="90%" src="https://thumbnail8.coupangcdn.com/thumbnails/remote/292x292q65ex/image/vendor_inventory/280c/ccd412e25c10f1df9de6ddbf13ae69547fadd58c4a7120eac74460b66d9c.png" alt="">
+                    </div>
+                    <div>
+                        <p>로드 카본 휠셋</p>
+                        <p>3,500,000원</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+            <div>
+                <p>서울특별시 이태원</p>
+                <p>Tel: 042-719-8850 Fax: 042-719-8851</p>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <!--
+        2. 설치 스크립트
+        * 지도 퍼가기 서비스를 2개 이상 넣을 경우, 설치 스크립트는 하나만 삽입합니다.
+    -->
+    <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
+
+    <!-- 3. 실행 스크립트 -->
+    <script charset="UTF-8">
+        new daum.roughmap.Lander({
+            "timestamp" : "1691475115108",
+            "key" : "2fs7w"
+        }).render();
+    </script>
+</body>
+</html>

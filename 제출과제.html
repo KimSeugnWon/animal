@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>자전차</title>
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+   
+   <style>
+       .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+       .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
+       .map_wrap {position:relative;width:100%;height:500px;}
+       #menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+       .bg_white {background:#fff;}
+       #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
+       #menu_wrap .option{text-align: center;}
+       #menu_wrap .option p {margin:10px 0;}  
+       #menu_wrap .option button {margin-left:5px;}
+       #placesList li {list-style: none;}
+       #placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
+       #placesList .item span {display: block;margin-top:4px;}
+       #placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+       #placesList .item .info{padding:10px 0 10px 55px;}
+       #placesList .info .gray {color:#8a8a8a;}
+       #placesList .info .jibun {padding-left:26px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
+       #placesList .info .tel {color:#009900;}
+       #placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
+       #placesList .item .marker_1 {background-position: 0 -10px;}
+       #placesList .item .marker_2 {background-position: 0 -56px;}
+       #placesList .item .marker_3 {background-position: 0 -102px}
+       #placesList .item .marker_4 {background-position: 0 -148px;}
+       #placesList .item .marker_5 {background-position: 0 -194px;}
+       #placesList .item .marker_6 {background-position: 0 -240px;}
+       #placesList .item .marker_7 {background-position: 0 -286px;}
+       #placesList .item .marker_8 {background-position: 0 -332px;}
+       #placesList .item .marker_9 {background-position: 0 -378px;}
+       #placesList .item .marker_10 {background-position: 0 -423px;}
+       #placesList .item .marker_11 {background-position: 0 -470px;}
+       #placesList .item .marker_12 {background-position: 0 -516px;}
+       #placesList .item .marker_13 {background-position: 0 -562px;}
+       #placesList .item .marker_14 {background-position: 0 -608px;}
+       #placesList .item .marker_15 {background-position: 0 -654px;}
+       #pagination {margin:10px auto;text-align: center;}
+       #pagination a {display:inline-block;margin-right:10px;}
+       #pagination .on {font-weight: bold; cursor: default;color:#777;}
+       </style>
+
+
+   <style>
+       .container {
+           width: 1800px;
+           height: 3000px;
+           margin: auto;
+           padding-top: 80px;
+           border: 1px solid black;
+       }
+
+       .nav-bar {
+           height: 80px;
+           display: flex;
+           justify-content: space-between;
+           align-items: center;
+
+           position: fixed;
+           top: 0;
+           width: 1000px;
+
+       }
+
+       .nav-bar>div:nth-child(1) {
+           font-size: 30px;
+           font-weight: bold;
+           color: skyblue;
+       }
+
+
+
+
+       .nav-bar a {
+           text-decoration: none;
+           color: black;
+           margin: 40px;
+       }
+
+       .nav-bar>div:nth-child(3) {
+           background-color: gray;
+           padding-top: 8px;
+           padding-bottom: 8px;
+           padding-left: 12px;
+           padding-right: 12px;
+           cursor: pointer;
+       }
+
+       .nav-bar>div:nth-child(3):hover {
+           filter: brightness(95%);
+       }
+
+
+       .content {
+           background-color: white;
+           padding-left: 80px;
+           padding-right: 80px;
+       }
+
+       .content h3 {
+           color: orange;
+           text-align: center;
+       }
+
+
+
+       .content>div:nth-child(1) {
+           right: 40%;
+       }
+
+       .content>div:nth-child(2) {
+           display: flex;
+           flex-wrap: wrap;
+           justify-content: space-around;
+       }
+
+
+       .todayschedule {
+           display: flex;
+           height: 400px;
+       }
+
+       .todayschedule>div:nth-child(1) {
+           justify-content: center;
+           width: 50%;
+           display: flex;
+           align-items: center;
+           left: 40%;
+       }
+
+       .todayschedule>div:nth-child(2) {
+           width: 50%;
+           display: flex;
+           flex-direction: column;
+           justify-content: center;
+           align-items: center;
+           left: 30%;
+       }
+
+       .item1 {
+           justify-content: center;
+           align-items: center;
+
+       }
+
+       .container5{
+           width: 800px;
+           height: 600px;
+           margin: auto;
+           border: 1px solid black;}
+
+        .map{
+           border: solid 1px black;
+         
+           width: 1700px;
+           height: 1000px;
+           margin: auto;
+        }
+
+   
+   </style>
+</head>
+
+<body>
+
+
+   <div class="container">
+       <div class="nav-bar">
+           <div>자전차</div>
+           <div>
+               <a href="#top">home</a>
+               <a href="사고팔고1.html">사고팔고</a>
+               <a href="사진란.html">사진란</a>
+               <a href="번개.html">번개</a>
+
+           </div>
+           <div>로그인/회원가입</div>
+       </div>
+
+       
+           <div class="log">
+               <input id="inputId" type="text" placeholder="아이디">
+
+               <input id="inputPw" type="password" placeholder="비밀번호">
+
+               <button onclick="f_login()">로그인</button>
+
+           </div>
+           <hr>
+
+
+
+
+
+           <div class="inform">
+               <h3 style="text-align: center;">공지사항</h3>
+               <hr>
+               <p>서버 업데이트 공지드립니다</p>
+               <hr>
+               <p>자전차 카페 많은 관심 부탁드립니다</p>
+               <hr>
+           </div>
+
+           <div class="todayschedule">
+               <div>
+                   <h3>오늘의 일정</h3>
+                   <img width="200"
+                       src="https://static.vecteezy.com/system/resources/previews/010/405/500/non_2x/cycling-sport-line-icon-illustration-vector.jpg"
+                       alt="">
+                   <img width="1000" height="400"
+                       src="https://www.bikem.co.kr/fileuploader/php/files/202204/139579.jpg" alt="">
+               </div>
+
+               <div>
+                   <h2 style="color: aqua;">라이딩 경로</h2>
+                   <li>서울 한강 자전거길 출발</li>
+                   <li>탄천</li>
+                   <li>양재천</li>
+                   <li>과천</li>
+                   <li>학의천</li>
+                   <li>안양천</li>
+                   <li>여의도한강공원</li>
+               </div>
+
+
+           </div>
+
+           <hr>
+
+           <div class="item1">
+               <h3 style="text-align: center;">공유해요</h3>
+               <img width="1800" height="500"
+                   src="https://blog.kakaocdn.net/dn/mmO4F/btq3iLsgkUj/K86UFaIZk6PvVTcP6WBQU1/img.png" alt="">
+           </div>
+
+           <hr>
+
+
+           <div class="container2">
+               <h3 style="text-align: center;">길찾기</h3>
+           </div>
+           <hr>
+
+           
+           <div id="map" style="width:100%;height:50vh;"></div>
+           <div id="search" style="width:100%; height:fit-content;">
+               <input type="search" id='sbox' placeholder="search keyword">
+               <input type="submit" onclick="search()">
+           </div>
+
+
+           <div id="api_info">
+
+
+           </div>
+
+
+<script>
+   $.ajax({
+       url: "http://dapi.kakao.com/v2/maps/sdk.js?appkey=cae901596b3d28ef5e1f938f2f1fa896&libraries=services",
+       type: "get",
+       header: {
+           Authorization: 'KakaoAK {app_key}',
+       },
+       data: {},
+       dataType: "json",
+       success: callback,
+       error: function(){
+           alert('error');
+       }
+   });
+</script> 
+
+<script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=cae901596b3d28ef5e1f938f2f1fa896&libraries=services"></script>
+<script>
+// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
+var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+   mapOption = {
+       center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+       level: 3 // 지도의 확대 레벨
+   };  
+
+// 지도를 생성합니다    
+var map = new kakao.maps.Map(mapContainer, mapOption);
+
+// 장소 검색 객체를 생성합니다
+var ps = new kakao.maps.services.Places();
+
+// 키워드로 장소를 검색합니다
+ps.keywordSearch("대전", placesSearchCB);
+
+
+function search(){
+   ps.keywordSearch("대전", placesSearchCB);
+}
+
+
+
+// 키워드 검색 완료 시 호출되는 콜백함수 입니다
+function placesSearchCB (data, status, pagination) {
+   if (status === kakao.maps.services.Status.OK) {
+
+       // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+       // LatLngBounds 객체에 좌표를 추가합니다
+       var bounds = new kakao.maps.LatLngBounds();
+
+       for (var i=0; i<data.length; i++) {
+           displayMarker(data[i]);    
+           bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+       }      
+
+       // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+       map.setBounds(bounds);
+   }
+}
+
+// 지도에 마커를 표시하는 함수입니다
+function displayMarker(place) {
+   
+   // 마커를 생성하고 지도에 표시합니다
+   var marker = new kakao.maps.Marker({
+       map: map,
+       position: new kakao.maps.LatLng(place.y, place.x)
+   });
+
+   // 마커에 클릭이벤트를 등록합니다
+   kakao.maps.event.addListener(marker, 'click', function() {
+       // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+       infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+       infowindow.open(map, marker);
+   });
+}
+</script>
+           
+
+            <div class="map">
+               <div id="map" style="width:50vw;height:60vh;"></div>
+               <script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=cae901596b3d28ef5e1f938f2f1fa896"></script>
+               <script>
+                   var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                       mapOption = {
+                           center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                           level: 3 // 지도의 확대 레벨
+                       };
+
+                   // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+                   var map = new kakao.maps.Map(mapContainer, mapOption);
+               </script>
+
+
+          </div> 
+
+       
+           
+
+
+
+
+  <script>
+
+var url = 'http://api.data.go.kr/openapi/tn_pubr_public_bike_road_api'; /*URL*/
+var srvkey = ('xxRCr5WauokrZC7S%2FjW3uai5raxIBJFN51IZfKzrADxaq3srvOOk0zYYJmnSPS6gbpR5fJ7MOKDnmu9rC4ZvaA%3D%3D');
+srvkey = 'GPWU2Lmi9TPc%2Fr6shBeF1ExMgk9SB4E5jnaq4sP519OqYWEugWViyrTYRHeg%2FTjJe28RDb%2FzyhFmrssNOKK8ng%3D%3D';
+srvkey = 'GPWU2Lmi9TPc%252Fr6shBeF1ExMgk9SB4E5jnaq4sP519OqYWEugWViyrTYRHeg%252FTjJe28RDb%252FzyhFmrssNOKK8ng%253D%253D';
+
+srvkey = 'GPWU2Lmi9TPc%2Fr6shBeF1ExMgk9SB4E5jnaq4sP519OqYWEugWViyrTYRHeg%2FTjJe28RDb%2FzyhFmrssNOKK8ng%3D%3D';
+srvkey = 'GPWU2Lmi9TPc/r6shBeF1ExMgk9SB4E5jnaq4sP519OqYWEugWViyrTYRHeg/TjJe28RDb/zyhFmrssNOKK8ng==';
+
+srvkey = 'GPWU2Lmi9TPc%2Fr6shBeF1ExMgk9SB4E5jnaq4sP519OqYWEugWViyrTYRHeg%2FTjJe28RDb%2FzyhFmrssNOKK8ng%3D%3D';
+
+var queryParams = url+ '?' + encodeURIComponent('serviceKey') + '='+encodeURIComponent(srvkey); /*Service Key*/
+
+queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('100'); /**/
+queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('xml'); /**/
+queryParams += '&' + encodeURIComponent('rteNm') + '=' + encodeURIComponent(''); /**/
+queryParams += '&' + encodeURIComponent('routeNum') + '=' + encodeURIComponent(''); /**/
+queryParams += '&' + encodeURIComponent('ctpvNm') + '=' + encodeURIComponent(''); /**/
+queryParams += '&' + encodeURIComponent('sggNm') + '=' + encodeURIComponent(''); /**/
+queryParams += '&' + encodeURIComponent('roadStPoint') + '=' + encodeURIComponent(''); /**/
+queryParams += '&' + encodeURIComponent('roadEdPoint') + '=' + encodeURIComponent(''); /**/
+queryParams += '&' + encodeURIComponent('roadStPointLat') + '=' + encodeURIComponent(''); /**/
+queryParams += '&' + encodeURIComponent('roadStPointLon') + '=' + encodeURIComponent(''); /**/
+queryParams += '&' + encodeURIComponent('roadEdPointLat') + '=' + encodeURIComponent(''); /**/
+queryParams += '&' + encodeURIComponent('roadEdPointLon') + '=' + encodeURIComponent(''); /**/
+queryParams += '&' + encodeURIComponent('majorStopover') + '=' + encodeURIComponent(''); /**/
+queryParams += '&' + encodeURIComponent('totalLength') + '=' + encodeURIComponent(''); /**/
+queryParams += '&' + encodeURIComponent('roadWidth') + '=' + encodeURIComponent(''); /**/
+queryParams += '&' + encodeURIComponent('bikeRoadWidth') + '=' + encodeURIComponent(''); /**/
+queryParams += '&' + encodeURIComponent('bikeRoadType') + '=' + encodeURIComponent(''); /**/
+queryParams += '&' + encodeURIComponent('bikeRoadNotiChk') + '=' + encodeURIComponent(''); /**/
+queryParams += '&' + encodeURIComponent('mngInstNm') + '=' + encodeURIComponent(''); /**/
+queryParams += '&' + encodeURIComponent('instTelno') + '=' + encodeURIComponent(''); /**/
+queryParams += '&' + encodeURIComponent('crtrYmd') + '=' + encodeURIComponent(''); /**/
+queryParams += '&' + encodeURIComponent('instt_code') + '=' + encodeURIComponent(''); /**/
+queryParams += '&' + encodeURIComponent('instt_nm') + '=' + encodeURIComponent(''); /**/
+
+
+
+$.ajax({
+           type:"GET",
+           url:queryParams,
+           data:{},
+           success:function(response){
+               console.log(response)
+               document.getElementById("api_info").innerHTML = response;
+           }
+
+       })
+
+
+
+
+
+
+
+         url = 'http://api.data.go.kr/openapi/tn_pubr_public_bike_road_api';
+       servicekey = 'xxRCr5WauokrZC7S%2FjW3uai5raxIBJFN51IZfKzrADxaq3srvOOk0zYYJmnSPS6gbpR5fJ7MOKDnmu9rC4ZvaA%3D%3D';
+
+       wholeurl = url+'?'+servicekey+'&'+'PageNo'+'&'+'numOfRows'+'&'+''+'&'+'PageNo'
+       queryParams = url+'?'+encodeURIComponent('servicekey')+'='+servicekey;
+        queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('100'); /**/
+ queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('xml'); /**/
+ queryParams += '&' + encodeURIComponent('rteNm') + '=' + encodeURIComponent(''); /**/
+ queryParams += '&' + encodeURIComponent('routeNum') + '=' + encodeURIComponent(''); /**/
+ queryParams += '&' + encodeURIComponent('ctpvNm') + '=' + encodeURIComponent(''); /**/
+ queryParams += '&' + encodeURIComponent('sggNm') + '=' + encodeURIComponent(''); /**/
+ queryParams += '&' + encodeURIComponent('roadStPoint') + '=' + encodeURIComponent(''); /**/
+ queryParams += '&' + encodeURIComponent('roadEdPoint') + '=' + encodeURIComponent(''); /**/
+ queryParams += '&' + encodeURIComponent('roadStPointLat') + '=' + encodeURIComponent(''); /**/
+ queryParams += '&' + encodeURIComponent('roadStPointLon') + '=' + encodeURIComponent(''); /**/
+ queryParams += '&' + encodeURIComponent('roadEdPointLat') + '=' + encodeURIComponent(''); /**/
+ queryParams += '&' + encodeURIComponent('roadEdPointLon') + '=' + encodeURIComponent(''); /**/
+ queryParams += '&' + encodeURIComponent('majorStopover') + '=' + encodeURIComponent(''); /**/
+ queryParams += '&' + encodeURIComponent('totalLength') + '=' + encodeURIComponent(''); /**/
+ queryParams += '&' + encodeURIComponent('roadWidth') + '=' + encodeURIComponent(''); /**/
+ queryParams += '&' + encodeURIComponent('bikeRoadWidth') + '=' + encodeURIComponent(''); /**/
+ queryParams += '&' + encodeURIComponent('bikeRoadType') + '=' + encodeURIComponent(''); /**/
+ queryParams += '&' + encodeURIComponent('bikeRoadNotiChk') + '=' + encodeURIComponent(''); /**/
+ queryParams += '&' + encodeURIComponent('mngInstNm') + '=' + encodeURIComponent(''); /**/
+ queryParams += '&' + encodeURIComponent('instTelno') + '=' + encodeURIComponent(''); /**/
+ queryParams += '&' + encodeURIComponent('crtrYmd') + '=' + encodeURIComponent(''); /**/
+ queryParams += '&' + encodeURIComponent('instt_code') + '=' + encodeURIComponent(''); /**/
+ queryParams += '&' + encodeURIComponent('instt_nm') + '=' + encodeURIComponent('');
+ alert(queryParams);
+     
+  </script>
+           
+
+
+
+
+</body>
+
+</html>
